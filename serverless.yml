@@ -1,0 +1,38 @@
+service: laravel-serverless
+
+provider:
+  name: aws
+  # Default stage (default: dev)
+  stage: dev
+  # Default region (default: us-east-1)
+  region: ap-southeast-1
+  # # The AWS profile to use to deploy (default: "default" profile)
+  # profile: production
+  # # Use a custom name for the CloudFormation stack
+  # stackName: custom-stack-name
+  # Optional CloudFormation tags to apply to APIs and functions
+  ecr:
+    images:
+      laravel-image:
+        path: ./
+
+package:
+  # Directories to exclude from deployment
+  patterns:
+    - "!node_modules/**"
+    - "!public/storage"
+    - "!resources/assets/**"
+    - "!storage/**"
+    - "!tests/**"
+
+functions:
+  # This function runs the Laravel website/API
+  laravel-serverless-func:
+    image:
+      name: laravel-image
+    events:
+      - httpApi: "*"
+
+plugins:
+  # We need to include the Bref plugin
+  - ./vendor/bref/bref
