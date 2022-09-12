@@ -1,0 +1,48 @@
+name: Deploy Laravel to AWs Lambda Container
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: 
+      - main
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Bref for Serverless
+        uses: php-actions/composer@v6
+        with:
+          # Install Bref for Serverless
+          commands: require bref/bref bref/laravel-bridge --update-with-dependencies
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          # Install PHP extension
+          # php_extensions:
+          # Wont install dev dependencies
+          dev: no
+          # Build for porduction
+          args: --prefer-dist --optimize-autoloader
+
+      - name: Use NodeJS 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - run: npm ci
+
+      - name: serverless deploy
+        uses: serverless/github-action@v2
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
