@@ -32,6 +32,7 @@ functions:
       name: baseimage
     events:
       - httpApi: "*"
+    logRetentionInDays: 3
 
 plugins:
   # Include the Bref plugin for PHP support
