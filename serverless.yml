@@ -1,4 +1,4 @@
-service: laravel-serverless
+service: lara-app
 
 provider:
   name: aws
@@ -13,7 +13,7 @@ provider:
   # Optional CloudFormation tags to apply to APIs and functions
   ecr:
     images:
-      laravel-image:
+      baseimage:
         path: ./
 
 package:
@@ -27,12 +27,12 @@ package:
 
 functions:
   # This function runs the Laravel website/API
-  laravel-serverless-func:
+  core-func:
     image:
-      name: laravel-image
+      name: baseimage
     events:
       - httpApi: "*"
 
 plugins:
-  # We need to include the Bref plugin
+  # Include the Bref plugin for PHP support
   - ./vendor/bref/bref
