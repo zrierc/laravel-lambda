@@ -37,8 +37,6 @@ jobs:
         with:
           node-version: 16
 
-      - run: npm ci
-
       - name: serverless deploy
         uses: serverless/github-action@v2
         with:
