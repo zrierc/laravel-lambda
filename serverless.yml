@@ -3,7 +3,7 @@ service: lara-app
 provider:
   name: aws
   # Default stage (default: dev)
-  stage: dev
+  stage: prod
   # Default region (default: us-east-1)
   region: ap-southeast-1
   # # The AWS profile to use to deploy (default: "default" profile)
