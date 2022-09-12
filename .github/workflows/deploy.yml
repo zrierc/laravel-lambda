@@ -1,4 +1,4 @@
-name: Deploy Laravel to AWs Lambda Container
+name: Deploy Laravel to AWS Lambda Container
 
 on:
   push:
@@ -36,6 +36,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
       - name: serverless deploy
         uses: serverless/github-action@v2
