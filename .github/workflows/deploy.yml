@@ -46,10 +46,28 @@ jobs:
           dev: no
           args: --prefer-dist --optimize-autoloader
 
+      - name: get version
+        run: git describe --tags --abbrev=0
+
+      - name: get version hash
+        run: git rev-parse --short $(git describe --tags --abbrev=0)
+
+      - name: set version
+        run: APP_VERSION=$(git describe --tags --abbrev=0)
+
+      - name: set version hash
+        run: APP_VERSION_HASH=$(git rev-parse --short $APP_VERSION)
+
+      - name: output version
+        run: echo $APP_VERSION
+
+      - name: output version hash
+        run: echo $APP_VERSION_HASH
+
       - name: Setup app env
         run: |
           echo "APP_VERSION=$(git describe --tags --abbrev=0)" >> .env
-          echo "APP_VERSION_HASH=$(git rev-parse --short $(git describe --tags --abbrev=0))}" >> .env
+          echo "APP_VERSION_HASH=$(git rev-parse --short $(git describe --tags --abbrev=0))" >> .env
 
       - name: Verbose env file
         run: cat .env
