@@ -35,8 +35,7 @@ jobs:
       - name: Install Bref for Serverless
         uses: php-actions/composer@v6
         with:
-          # Install Bref for Serverless
-          commands: require bref/bref bref/laravel-bridge --update-with-dependencies
+          command: require bref/bref bref/laravel-bridge --update-with-dependencies
 
       - name: Install dependencies
         uses: php-actions/composer@v6
@@ -48,9 +47,6 @@ jobs:
         run: |
           echo "APP_VERSION=$(git describe --tags --abbrev=0)" >> .env
           echo "APP_VERSION_HASH=$(git rev-parse --short $(git describe --tags --abbrev=0))" >> .env
-
-      - name: Verbose env file
-        run: cat .env
 
       - name: Deploy App
         run: sls deploy --verbose
