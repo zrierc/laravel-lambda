@@ -5,9 +5,9 @@ on:
     branches:
       - main
   pull_request:
-    branches: 
+    branches:
       - main
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -15,18 +15,18 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      
+
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
-        
+
       - name: Use NodeJS 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          
+
       - name: Install Serverless Framework
         run: npm i -g serverless@2.72.2
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -45,7 +45,13 @@ jobs:
         with:
           dev: no
           args: --prefer-dist --optimize-autoloader
-      
+
+      - name: Setup app env
+        run: |
+          APP_VERSION=$(git describe --tags --abbrev=0) \
+          APP_VERSION_HASH=$(git rev-parse --short $APP_VERSION) \
+          echo "\nAPP_VERSION=${APP_VERSION}" >> .env \
+          echo "APP_VERSION_HASH=${APP_VERSION_HASH}" >> .env
+
       - name: Deploy App
         run: sls deploy --verbose
-    

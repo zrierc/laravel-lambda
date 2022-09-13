@@ -1,15 +1,24 @@
 service: lara-app
 
+# Enable serverless to read .env file
+useDotenv: true
+
 provider:
   name: aws
   # Default stage (default: dev)
-  stage: dev
+  stage: ${env:APP_VERSION_HASH}-dev
   # Default region (default: us-east-1)
   region: ap-southeast-1
   # # The AWS profile to use to deploy (default: "default" profile)
   # profile: production
-  # # Use a custom name for the CloudFormation stack
-  # stackName: custom-stack-name
+  # Apply tags to APIs and functions
+  tags:
+    APP_VERSION: ${env:APP_VERSION}
+    APP_VERSION_HASH: ${env:APP_VERSION_HASH}
+  # Apply tags to the stack
+  stackTags:
+    APP_VERSION: ${env:APP_VERSION}
+    APP_VERSION_HASH: ${env:APP_VERSION_HASH}
   # Optional CloudFormation tags to apply to APIs and functions
   ecr:
     images:
