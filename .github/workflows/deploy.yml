@@ -48,6 +48,9 @@ jobs:
           APP_VERSION_HASH=$(git rev-parse --short $APP_VERSION) \
           echo "\nAPP_VERSION=${APP_VERSION}" >> .env \
           echo "APP_VERSION_HASH=${APP_VERSION_HASH}" >> .env
+          
+      - name: Verbose env file
+        run: cat .env
 
       - name: Deploy App
         run: sls deploy --verbose
