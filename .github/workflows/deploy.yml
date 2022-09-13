@@ -5,7 +5,7 @@ on:
     branches:
       - main
   pull_request:
-    branches: 
+    branches:
       - main
 
 jobs:
@@ -48,11 +48,9 @@ jobs:
 
       - name: Setup app env
         run: |
-          APP_VERSION=$(git describe --tags --abbrev=0) \
-          APP_VERSION_HASH=$(git rev-parse --short $APP_VERSION) \
-          echo "\nAPP_VERSION=${APP_VERSION}" >> .env \
-          echo "APP_VERSION_HASH=${APP_VERSION_HASH}" >> .env
-          
+          echo "APP_VERSION=$(git describe --tags --abbrev=0)" >> .env
+          echo "APP_VERSION_HASH=$(git rev-parse --short $(git describe --tags --abbrev=0))}" >> .env
+
       - name: Verbose env file
         run: cat .env
 
