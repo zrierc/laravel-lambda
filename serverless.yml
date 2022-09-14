@@ -11,6 +11,8 @@ provider:
   region: ap-southeast-1
   # # The AWS profile to use to deploy (default: "default" profile)
   # profile: production
+  # Set duration CloudWatch log retention
+  logRetentionInDays: 3
   # Apply tags to APIs and functions
   tags:
     APP_VERSION: ${env:APP_VERSION}
