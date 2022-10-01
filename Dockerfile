@@ -1,28 +1,29 @@
-FROM  webdevops/php-nginx:8.0-alpine
-
-ENV WEB_DOCUMENT_ROOT /app/public
-ENV APP_ENV production
+FROM existenz/webstack:8.0
 
 WORKDIR /app
+
+ENV S6_READ_ONLY_ROOT=1
+
+RUN apk -U --no-cache add \
+      php8-bcmath \
+      php8-ctype \
+      php8-fileinfo \
+      php8-json \
+      php8-mbstring \
+      php8-openssl \
+      php8-pdo \
+      php8-tokenizer \
+      php8-xml \
+      php8-session
 
 # Setup lambda web adapter
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.4.0 /lambda-adapter /opt/extensions/lambda-adapter
 
 # nginx config
-COPY docker/nginx-config /opt/docker/etc/nginx/conf.d
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx-config /etc/nginx/conf.d
 
 # App source code
 COPY . .
 
-# Install required dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
-# Optimizing Configuration loading
-RUN php artisan config:cache
-# Optimizing Route loading
-RUN php artisan route:cache
-# Optimizing View loading
-RUN php artisan view:cache
-
 EXPOSE 8080
-
-RUN chown -R application:application .
