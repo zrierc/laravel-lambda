@@ -1,19 +1,19 @@
-# FROM composer:2.4 as builder
+FROM composer:2.4 as builder
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY . .
+COPY . .
 
-# # Install required dependencies
-# RUN composer install --no-interaction --optimize-autoloader --no-dev
-# # Optimizing Configuration loading
-# RUN php artisan config:cache
-# # Optimizing Route loading
-# RUN php artisan route:cache
-# # Optimizing View loading
-# RUN php artisan view:cache
-# # Optimize app
-# RUN php artisan optimize
+# Install required dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Optimizing Configuration loading
+RUN php artisan config:cache
+# Optimizing Route loading
+RUN php artisan route:cache
+# Optimizing View loading
+RUN php artisan view:cache
+# Optimize app
+RUN php artisan optimize
 
 
 FROM nginx:stable-alpine
@@ -52,7 +52,7 @@ COPY docker/php-conf/php-fpm.conf /etc/php8/php-fpm.conf
 COPY docker/php-conf/php-custom.conf /etc/php-fpm.d/php.conf
 
 # App source code
-COPY . .
+COPY --from=builder /app .
 
 COPY ./run.sh /run.sh
 RUN chmod +x /run.sh
