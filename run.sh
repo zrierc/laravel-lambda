@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
+set -eu
 
-supervisord -c /etc/supervisord.conf
-# set -eu
+php-fpm8
 
-# php-fpm
-# nginx -g 'daemon off;';
+nginx -g 'daemon off;';
