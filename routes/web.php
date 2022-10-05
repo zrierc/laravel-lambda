@@ -16,3 +16,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/ping', function () {
+    return 'pong';
+});
+
+Route::get('/hello', function () {
+    return response()->json([
+        'hello' => 'world',
+    ]);
+});
+
+Route::get('/user/{name?}', function ($name = null){
+    if (is_null($name)) {
+        $name = false;
+    }
+
+    return response()->json([
+        'name' => $name,
+    ]);
+});
