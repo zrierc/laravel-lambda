@@ -21,89 +21,23 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Pre-requisite for deployment
+## Deployment Methods
 
--   AWS Account
--   NodeJS version >= 14.x
--   Serverless Framework version 2.72.2 or latest stable version (v3.x.x)
--   Composer version >= 2.x.x
+This project is intended to be deployed to [AWS Lambda](https://aws.amazon.com/lambda/). There are several ways to deploy Laravel app to AWS Lambda.
 
-## Deployment
+-   The first and easiest method is using [Serverless PHP - bref](https://bref.sh/). Bref is a composer packages that uses [Serverless Framework](https://www.serverless.com/) to helps you deploy PHP-based applications to AWS and run them on AWS Lambda.
+-   Another method is using [aws-lambda-web-adapter](https://github.com/awslabs/aws-lambda-web-adapter) with [AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html).
 
-### Step 1: Install [Bref](https://bref.sh/docs/installation.html)
-
-```
-composer require bref/bref bref/laravel-bridge --update-with-dependencies
-```
-
-### Step 2: Create Dockerfile
-
-```Dockerfile:Dockerfile
-FROM bref/php-80-fpm
-
-COPY . /var/task
-
-CMD ["public/index.php"]
-```
-
-If you need enable another PHP extensions, you can pulling them from [Bref Extensions](https://github.com/brefphp/extra-php-extensions), see [example](https://bref.sh/docs/web-apps/docker.html#docker-image).
-
-### Step 3: setup serverless framework by creating serverless.yml file
-
-```diff:serverless.yml
-# Name of your services and aws resources
-service: lara-app
-
-# Enable serverless to read .env file (optional)
-useDotenv: true
-
-provider:
-  name: aws
-  # Default stage (default: dev)
-  stage: prod
-  # Default region (default: us-east-1)
-  region: ap-southeast-1
-  # # The AWS profile to use to deploy (default: "default" profile)
-  profile: my-cool-profile
-  # Set duration CloudWatch log retention
-  logRetentionInDays: 3
-  # Setup ECR Repository
-  ecr:
-    images:
-      baseimage:
-        path: ./
-
-package:
-  # Directories to exclude from deployment
-  patterns:
-    - "!node_modules/**"
-    - "!public/storage"
-    - "!resources/assets/**"
-    - "!storage/**"
-    - "!tests/**"
-
-functions:
-  # This function runs the Laravel website/API
-  core-func:
-    image:
-      name: baseimage
-    events:
-      - httpApi: "*"
-
-plugins:
-  # Include the Bref plugin for PHP support
-  - ./vendor/bref/bref
-```
-
-### Step 4: Deploy your app 🚀
-
-```
-sls deploy
-```
+**Please check out each branch of this repository to learn more about each deployment.**
 
 ## References
 
--   [AWS Lambda Official Docs](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) [https://docs.aws.amazon.com/lambda/latest/dg/welcome.html]
--   [Bref Official Docs](https://bref.sh/) [https://bref.sh/]
--   [Serverless Framework](https://www.serverless.com/framework/docs/getting-started) [https://www.serverless.com/framework/docs/getting-started]
--   [`serverless.yml` References](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml) [https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml]
+Here are the resources that might help to learn more about each deployment method:
+
+-   [AWS Lambda Official Docs](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html).
+-   [Bref Official Docs](https://bref.sh/).
+-   [Serverless Framework](https://www.serverless.com/framework/docs/getting-started).
+-   [AWS Lambda Web Adapter Repository](https://github.com/awslabs/aws-lambda-web-adapter).
+-   [AWS Serverless Application Model (SAM) Documentation](https://aws.amazon.com/serverless/sam/).
+
+If you have questions or found any problem let me know by opening issue - your feedback and contributions are welcome!
