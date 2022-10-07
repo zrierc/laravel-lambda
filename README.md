@@ -11,56 +11,58 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Pre-requisite for deployment
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   AWS Account.
+-   NodeJS version >= `14.x`.
+-   Serverless CLI version `2.72.2` or latest stable version (`v3.x.x`).
+-   Composer version >= `2.x.x`.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Deployment
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Step 1: Configure [AWS Credentials](https://www.serverless.com/framework/docs/providers/aws/guide/credentials).
 
-## Laravel Sponsors
+### Step 2: Install [Bref](https://bref.sh/docs/installation.html).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+composer require bref/bref bref/laravel-bridge --update-with-dependencies
+```
 
-### Premium Partners
+### Step 3: Create a `serverless.yml` configuration file:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+php artisan vendor:publish --tag=serverless-config
+```
 
-## Contributing
+> The command above will download the template configuration file. To learn more how it works see [this documentation](https://bref.sh/docs/frameworks/laravel.html#how-it-works).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Step 4 (optional): Create custom configuration in `serverless.yml`.
 
-## Code of Conduct
+You can also customize AWS resources like naming lambda function or a create custom domain name for your API Gateway. See [`serverless.yml` reference](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Step 5: Deploy your app 🚀
 
-## Security Vulnerabilities
+```
+sls deploy
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## References
 
-## License
+If you get an error during the deployment proccess or want to learn more about bref and serverless framework, take a look at the following resources:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   [AWS Lambda Official Docs](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) [https://docs.aws.amazon.com/lambda/latest/dg/welcome.html]
+-   [Bref Official Docs](https://bref.sh/) [https://bref.sh/]
+-   [Serverless Framework](https://www.serverless.com/framework/docs/getting-started) [https://www.serverless.com/framework/docs/getting-started]
+-   [`serverless.yml` References](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml) [https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml]
+
+If you have questions or found any problem let me know by opening issue - your feedback and contributions are welcome!
