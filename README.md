@@ -23,10 +23,10 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Pre-requisite for deployment
 
--   AWS Account
--   NodeJS version >= 14.x
--   Serverless Framework version 2.72.2 or latest stable version (v3.x.x)
--   Composer version >= 2.x.x
+-   AWS Account.
+-   NodeJS version >= `14.x`.
+-   Serverless CLI version `2.72.2` or latest stable version (`v3.x.x`).
+-   Composer version >= `2.x.x`.
 
 ## Deployment
 
@@ -103,7 +103,11 @@ sls deploy
 
 ## References
 
+If you get an error during the deployment proccess or want to learn more about bref and serverless framework, take a look at the following resources:
+
 -   [AWS Lambda Official Docs](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) [https://docs.aws.amazon.com/lambda/latest/dg/welcome.html]
 -   [Bref Official Docs](https://bref.sh/) [https://bref.sh/]
 -   [Serverless Framework](https://www.serverless.com/framework/docs/getting-started) [https://www.serverless.com/framework/docs/getting-started]
 -   [`serverless.yml` References](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml) [https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml]
+
+If you have questions or found any problem let me know by opening issue - your feedback and contributions are welcome!
