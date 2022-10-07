@@ -30,13 +30,15 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Deployment
 
-### Step 1: Install [Bref](https://bref.sh/docs/installation.html)
+### Step 1: Configure [AWS Credentials](https://www.serverless.com/framework/docs/providers/aws/guide/credentials).
+
+### Step 2: Install [Bref](https://bref.sh/docs/installation.html)
 
 ```
 composer require bref/bref bref/laravel-bridge --update-with-dependencies
 ```
 
-### Step 2: Create Dockerfile
+### Step 3: Create Dockerfile
 
 ```Dockerfile:Dockerfile
 FROM bref/php-80-fpm
@@ -48,7 +50,7 @@ CMD ["public/index.php"]
 
 If you need enable another PHP extensions, you can pulling them from [Bref Extensions](https://github.com/brefphp/extra-php-extensions), see [example](https://bref.sh/docs/web-apps/docker.html#docker-image).
 
-### Step 3: setup serverless framework by creating serverless.yml file
+### Step 4: setup serverless framework by creating serverless.yml file
 
 ```diff:serverless.yml
 # Name of your services and aws resources
@@ -95,7 +97,7 @@ plugins:
   - ./vendor/bref/bref
 ```
 
-### Step 4: Deploy your app 🚀
+### Step 5: Deploy your app 🚀
 
 ```
 sls deploy
