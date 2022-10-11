@@ -1,8 +1,9 @@
 name: Deploy Laravel to AWS Lambda Container
 
 on:
-  release:
-    types: [released]
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
