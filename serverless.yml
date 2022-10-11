@@ -1,4 +1,4 @@
-service: laravel-bref-container
+service: lara-app
 
 # Enable serverless to read .env file
 useDotenv: true
@@ -6,21 +6,19 @@ useDotenv: true
 provider:
   name: aws
   # Default stage (default: dev)
-  stage: prod
+  stage: ${env:APP_VERSION_HASH}-prod
   # Default region (default: us-east-1)
   region: ap-southeast-1
   # # The AWS profile to use to deploy (default: "default" profile)
   # profile: production
-  # Set duration CloudWatch log retention
-  logRetentionInDays: 14
   # Apply tags to APIs and functions
   tags:
-    ENV: bref-container
-    APP_VERSION: v1.2.0
+    APP_VERSION: ${env:APP_VERSION}
+    APP_VERSION_HASH: ${env:APP_VERSION_HASH}
   # Apply tags to the stack
   stackTags:
-    ENV: bref-container
-    APP_VERSION: v1.2.0
+    APP_VERSION: ${env:APP_VERSION}
+    APP_VERSION_HASH: ${env:APP_VERSION_HASH}
   # Optional CloudFormation tags to apply to APIs and functions
   ecr:
     images:
@@ -43,7 +41,7 @@ functions:
       name: baseimage
     events:
       - httpApi: "*"
-    logRetentionInDays: 14
+    logRetentionInDays: 3
 
 plugins:
   # Include the Bref plugin for PHP support
